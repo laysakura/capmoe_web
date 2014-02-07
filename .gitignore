@@ -28,3 +28,6 @@ doc/html/
 doc/coverage/
 
 htmlcov/
+
+capmoe_web/password/*
+!capmoe_web/password/.gitkeep
