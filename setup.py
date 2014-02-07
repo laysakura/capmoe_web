@@ -14,7 +14,7 @@ setup(
     author_email     = 'lay.sakura@gmail.com',
     test_suite       = 'nose.collector',
     install_requires = [
-        'gunicorn',
+        # 'gunicorn',  # [todo] - introduce gunicorn as app server if too much load
         'Django',
         # 'rainbow_logging_handler',
     ],
