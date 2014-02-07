@@ -60,7 +60,7 @@ DATABASES = {
         'ENGINE'   : 'django.db.backends.mysql',
         'NAME'     : 'capmoe',
         'USER'     : 'capmoeuser',
-        'PASSWORD' : open(os.path.join(BASE_DIR, 'password', 'mysql-capmoeuser-pass')).read(),
+        'PASSWORD' : open(os.path.join(BASE_DIR, 'capmoe_web', 'password', 'mysql-capmoeuser-pass')).read().strip(),
         'HOST'     : '127.0.0.1',
     }
 }
@@ -70,7 +70,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = ' Japan'
+TIME_ZONE = 'Japan'
 
 USE_I18N = True
 

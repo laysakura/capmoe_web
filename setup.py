@@ -16,6 +16,7 @@ setup(
     install_requires = [
         # 'gunicorn',  # [todo] - introduce gunicorn as app server if too much load
         'Django',
+        'mysql-python',
         # 'rainbow_logging_handler',
     ],
     tests_require = [
