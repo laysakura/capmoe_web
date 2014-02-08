@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    :synopsis: Unit tests for models ofCapMoe
+    :synopsis: Unit tests for models of CapMoe
 
     Description.
 """

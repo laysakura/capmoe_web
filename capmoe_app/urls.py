@@ -21,5 +21,6 @@ from capmoe_app import views
 urlpatterns = patterns(
     '',
 
-    url(r'^upload/', views.upload),
+    url(r'^upload/(?P<tmpimg_id>[\d\w])+', views.upload_capimg),
+    url(r'^upload/', views.upload_tmpimg),
 )
