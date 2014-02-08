@@ -18,7 +18,6 @@ pyvenv.cfg
 .python-version
 MANIFEST
 *.egg
-.travis.yml*
 **.watsonrc
 
 doc/.buildinfo
