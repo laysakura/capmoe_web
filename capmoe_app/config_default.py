@@ -8,10 +8,8 @@
     Override these default values in your `config.py`
 """
 
-
 # standard modules
-from os.path import join
-from tempfile import gettempdir
+from os.path import join, expanduser
 
 # 3rd party modules
 
@@ -19,7 +17,7 @@ from tempfile import gettempdir
 
 
 config = {
-    'img_dir'    : join(gettempdir(), 'CapMoeImg'),
-    'thumb_dir'  : join(gettempdir(), 'CapMoeThumb'),
+    'img_dir'    : join(expanduser('~'), 'CapMoeImg'),
+    'thumb_dir'  : join(expanduser('~'), 'CapMoeThumb'),
     'img_suffix' : 'jpg',
 }
