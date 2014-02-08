@@ -24,6 +24,7 @@ setup(
         'coverage',
         'nose-cov',
         'nose-parameterized',
+        'django-nose',
     ],
     packages = [
         'capmoe_web',
