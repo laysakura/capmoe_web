@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_nose',
+    'capmoe_app',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -88,3 +89,12 @@ STATIC_URL = '/static/'
 # Unit test
 # Using django_nose => https://github.com/django-nose/django-nose
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+NOSE_ARGS = [
+    '--verbosity=2',
+    '--nocapture',
+    '--detailed-errors',
+    '--with-cov',
+    '--cov=capmoe_app',
+    '--cov-config=.coveragerc',
+    '--cov-report=html',
+]
