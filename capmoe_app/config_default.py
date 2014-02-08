@@ -17,7 +17,14 @@ from os.path import join, expanduser
 
 
 config = {
-    'img_dir'    : join(expanduser('~'), 'CapMoeImg'),
-    'thumb_dir'  : join(expanduser('~'), 'CapMoeThumb'),
-    'img_suffix' : 'jpg',
+    'max_upload_byte' : 4 * 1e6,  # must be multiply of 4
+
+    # temporary image (before cap is chopped)
+    'tmpimg_dir'         : join(expanduser('~'), 'CapMoeTmpImg'),
+    'max_tmpimg_size'    : (800, 800),
+    'tmpimg_pillow_type' : 'JPEG',
+
+    # cap image
+    'capimg_dir'    : join(expanduser('~'), 'CapMoeImg'),
+    'capimg_suffix' : join(expanduser('~'), 'CapMoeImg'),
 }

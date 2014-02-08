@@ -24,5 +24,5 @@ def setUp(self):
 
 def test_file_path():
     record = CapImage.objects.get(id=1)
-    ns.eq_(record.img_path(),
-           join(config['img_dir'], '1.' + config['img_suffix']))
+    ns.eq_(record.capimg_path(),
+           join(config['capimg_dir'], '1.' + config['capimg_suffix']))

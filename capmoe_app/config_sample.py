@@ -14,4 +14,4 @@ from capmoe_app.config_default import config
 
 # [todo] - more informative sample?
 
-# config['imgdir'] = '/home/youruser/capmoe_img'
+# config['capimg_dir'] = '/home/youruser/capmoe_img'

@@ -26,6 +26,7 @@ setup(
         # 'gunicorn',  # [todo] - introduce gunicorn as app server if too much load
         'Django',
         'PyMySQL',
+        'pillow',
         # 'rainbow_logging_handler',
     ],
     extras_require = {
@@ -33,6 +34,7 @@ setup(
     },
     packages = [
         'capmoe_web',
+        'capmoe_app',
     ],
     scripts = [
     ],
