@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'u##!%^x1u424)=^vlxr8=*ag33-&(64(08@w)-84@iy(mmlij7'
+SECRET_KEY = open(os.path.join(BASE_DIR, 'capmoe_web', 'password', 'django-secret-key')).read().strip(),
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -36,6 +36,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_nose',
+    'capmoe_app',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -57,8 +59,11 @@ WSGI_APPLICATION = 'capmoe_web.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE'   : 'django.db.backends.mysql',
+        'NAME'     : 'capmoe',
+        'USER'     : 'capmoeuser',
+        'PASSWORD' : open(os.path.join(BASE_DIR, 'capmoe_web', 'password', 'mysql-capmoeuser-pass')).read().strip(),
+        'HOST'     : '127.0.0.1',
     }
 }
 
@@ -67,7 +72,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Japan'
 
 USE_I18N = True
 
@@ -80,3 +85,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Unit test
+# Using django_nose => https://github.com/django-nose/django-nose
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--verbosity=2',
+    '--nocapture',
+    '--detailed-errors',
+    '--with-cov',
+    '--cov=capmoe_app',
+    '--cov-config=.coveragerc',
+    '--cov-report=html',
+]

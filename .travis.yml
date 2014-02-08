@@ -1,0 +1,23 @@
+language: python
+python:
+  - "3.3"
+
+branches:
+  only:
+    - master
+    - dev
+
+install:
+  - "pip install ."
+  - "pip install -e .[testing]"  # for installing `tests_require`
+
+env:
+  - DJANGO_VERSION=1.6.2 DJANGO_SETTINGS_MODULE=capmoe_web.settings_travis
+
+before_script:
+  - mysql -e 'create database capmoe_travis;'
+  - echo 'abcdefg' > capmoe_web/password/django-secret-key
+  - touch capmoe_web/password/mysql-capmoeuser-pass
+
+script:
+  - "python manage.py test"
