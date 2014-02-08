@@ -88,7 +88,9 @@ STATIC_URL = '/static/'
 
 # Unit test
 # Using django_nose => https://github.com/django-nose/django-nose
+
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
 NOSE_ARGS = [
     '--verbosity=2',
     '--nocapture',

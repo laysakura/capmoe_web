@@ -2,17 +2,21 @@ language: python
 python:
   - "3.3"
 
-# command to install dependencies
+branches:
+  only:
+    - master
+    - dev
+
 install:
   - "pip install ."
   - "python setup.py test"  # for installing `tests_require`
   - "pip install nose-cov"  # why `nose-cov` isn't correctlly installed by `setup.py test` ?
 
-# command to run tests
+env:
+  - DJANGO_VERSION=1.6.2 DJANGO_SETTINGS_MODULE=capmoe_web.settings_travis
+
+before_script:
+  - mysql -e 'create database capmoe_travis;'
+
 script:
   - "python manage.py test"
-
-branches:
-  only:
-    - master
-    - dev
