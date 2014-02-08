@@ -3,6 +3,14 @@
 from setuptools import setup
 
 
+tests_require = [
+    'nose',
+    'coverage',
+    'nose-cov',
+    'nose-parameterized',
+    'django-nose',
+],
+
 setup(
     name             = 'capmoe_web',
     description      = '''CapMoe web service''',
@@ -13,19 +21,16 @@ setup(
     author           = 'Sho Nakatani',
     author_email     = 'lay.sakura@gmail.com',
     test_suite       = 'nose.collector',
+    tests_require    = tests_require,
     install_requires = [
         # 'gunicorn',  # [todo] - introduce gunicorn as app server if too much load
         'Django',
         'PyMySQL',
         # 'rainbow_logging_handler',
     ],
-    tests_require = [
-        'nose',
-        'coverage',
-        'nose-cov',
-        'nose-parameterized',
-        'django-nose',
-    ],
+    extras_require = {
+        'testing': tests_require,
+    },
     packages = [
         'capmoe_web',
     ],
