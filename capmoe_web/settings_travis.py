@@ -12,7 +12,6 @@
 from capmoe_web.settings import *
 
 
-SECRET_KEY = 'abcdefg'
 DATABASES = {
     'default': {
         'ENGINE'   : 'django.db.backends.mysql',

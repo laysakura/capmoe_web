@@ -17,6 +17,8 @@ env:
 
 before_script:
   - mysql -e 'create database capmoe_travis;'
+  - echo 'abcdefg' > capmoe_web/password/django-secret-key
+  - touch capmoe_web/password/mysql-capmoeuser-pass
 
 script:
   - "python manage.py test"
