@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'u##!%^x1u424)=^vlxr8=*ag33-&(64(08@w)-84@iy(mmlij7'
+SECRET_KEY = open(os.path.join(BASE_DIR, 'capmoe_web', 'password', 'django-secret-key')).read().strip(),
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
