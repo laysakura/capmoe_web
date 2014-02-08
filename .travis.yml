@@ -18,6 +18,7 @@ before_script:
   - mysql -e 'create database capmoe_travis;'
   - echo 'abcdefg' > capmoe_web/password/django-secret-key
   - touch capmoe_web/password/mysql-capmoeuser-pass
+  - cp capmoe_app/config_sample.py capmoe_app/config.py
 
 script:
   - "python manage.py test"

@@ -81,10 +81,18 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Templates
+
+TEMPLATE_DIRS = [
+    os.path.join(BASE_DIR, 'capmoe_app', 'templates'),
+]
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
 
 # Unit test
 # Using django_nose => https://github.com/django-nose/django-nose
@@ -95,6 +103,7 @@ NOSE_ARGS = [
     '--verbosity=2',
     '--nocapture',
     '--detailed-errors',
+    '--with-doctest',
     '--with-cov',
     '--cov=capmoe_app',
     '--cov-config=.coveragerc',

@@ -1,30 +1,28 @@
 # -*- coding: utf-8 -*-
 """
-    :synopsis: Unit tests for models ofCapMoe
+    :synopsis: Unit tests for models of CapMoe
 
     Description.
 """
 
 
 # standard modules
+from os.path import join
 
 # 3rd party modules
 import nose.tools as ns
 
 # original modules
-# from capmoe_app.models import Animal
+from capmoe_app.config import config
+from capmoe_app.models import CapImage
 
 
 def setUp(self):
-    pass
-    # Animal.objects.create(name="lion", sound="roar")
-    # Animal.objects.create(name="cat", sound="meow")
+    CapImage.objects.create()
+    CapImage.objects.create()
 
 
-def test_animals_can_speak():
-    """Animals that can speak are correctly identified"""
-    # lion = Animal.objects.get(name="lion")
-    # cat = Animal.objects.get(name="cat")
-    # ns.eq_(lion.speak(), 'The lion says "roar"')
-    # ns.eq_(cat.speak(), 'The cat says "meow"')
-    pass
+def test_file_path():
+    record = CapImage.objects.get(id=1)
+    ns.eq_(record.capimg_path(),
+           join(config['capimg_dir'], '1.' + config['capimg_suffix']))
