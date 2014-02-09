@@ -27,7 +27,7 @@ setup(
         'Django',
         'PyMySQL',
         'pillow',
-        # 'rainbow_logging_handler',
+        'rainbow_logging_handler',
     ],
     extras_require = {
         'testing': tests_require,

@@ -10,6 +10,7 @@
 
 
 # standard modules
+import logging
 
 # 3rd party modules
 from django.http import HttpResponse
@@ -20,6 +21,10 @@ from django.template import RequestContext
 # original modules
 from capmoe_app.upload.forms import UploadTmpImgForm
 from capmoe_app.upload.handlers import save_uploaded_tmpimg
+
+
+# global variables
+logger = logging.getLogger('raibow')
 
 
 def upload_tmpimg(request):
@@ -39,12 +44,17 @@ def upload_tmpimg_post(request):
     """
     form = UploadTmpImgForm(request.POST, request.FILES)
     if not form.is_valid():
+        logger.debug('Form contents is invalid')
         return HttpResponse(status=415)  # Unsupported Media Type
 
     try:
         tmpimg_id = save_uploaded_tmpimg(request.FILES['img_file'])
-    except AttributeError:
+    except AttributeError as e:
+        logger.debug(e)
         return HttpResponse(status=415)  # too large; Unsupported Media Type
+    except Exception as e:
+        logger.error('Unexpected error: %s' % (e))
+        return HttpResponse(status=500)
 
     return HttpResponseRedirect('/upload/%s' % (tmpimg_id))
 
@@ -56,6 +66,7 @@ def upload_capimg(request, tmpimg_id):
         return upload_capimg_post(request)
 
     pass
+
 
 def upload_capimg_post(request):
     """Extract only cap from temporary image, and save it
