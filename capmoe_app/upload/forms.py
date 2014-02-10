@@ -29,6 +29,6 @@ class UploadTmpImgForm(forms.Form):
 class UploadCapImgForm(forms.Form):
     """Form to chop a cap from temporary image, and upload it
     """
-    cap_x = forms.HiddenInput()
-    cap_y = forms.HiddenInput()
-    cap_r = forms.HiddenInput()
+    cap_x = forms.IntegerField(widget=forms.HiddenInput())
+    cap_y = forms.IntegerField(widget=forms.HiddenInput())
+    cap_r = forms.IntegerField(widget=forms.HiddenInput())
