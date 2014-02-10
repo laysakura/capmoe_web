@@ -56,7 +56,10 @@ def save_uploaded_tmpimg(f):
 def gen_capimg_candidates(tmpimg_id):
     """Generate candidate cap images
 
-    :returns: ['capimg_candidate_id', ...]
+    :returns: [{'id': 'capimg_candidate_id',
+               'x': candidate_x, 'y': candidate_y, 'r': candidate_r},
+               ...
+              ]
     :raises: :class:`TmpImgNotFoundError` when temporary image file
         corresponding to :param:`tmpimg_id` is not found
     """
@@ -80,4 +83,7 @@ def gen_capimg_candidates(tmpimg_id):
                        # must have access to `cv2` package and so on
     cand_circles = capmoe.api.capdetector(
         tmpimg_path, max_candidates=config['max_capimg_candidates'])
-    return [gen_capimg_candidate(tmpimg_path, c) for c in cand_circles]
+    return [
+        {'id': gen_capimg_candidate(tmpimg_path, c),
+         'x': c['x'], 'y': c['y'], 'r': c['r']}
+        for c in cand_circles]

@@ -75,7 +75,7 @@ def upload_capimg(request, tmpimg_id):
         return upload_capimg_post(request)
 
     try:
-        capimg_candidate_ids = gen_capimg_candidates(tmpimg_id)
+        capimg_candidates = gen_capimg_candidates(tmpimg_id)
     except err.TmpImgNotFoundError as e:
         logger.debug('Requested non-exisiting tmpimg (%s)' % (tmpimg_id))
         raise Http404
@@ -87,9 +87,9 @@ def upload_capimg(request, tmpimg_id):
     return render_to_response(
         'upload_capimg.html',
         context_instance=RequestContext(request, {
-            'form'                 : form,
-            'tmpimg_id'            : tmpimg_id,
-            'capimg_candidate_ids' : capimg_candidate_ids}))
+            'form'              : form,
+            'tmpimg_id'         : tmpimg_id,
+            'capimg_candidates' : capimg_candidates}))
 
 
 def upload_capimg_post(request):

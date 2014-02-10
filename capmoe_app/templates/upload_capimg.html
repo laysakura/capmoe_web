@@ -13,8 +13,13 @@
 
 <p>王冠候補</p>
 <ol>
-{% for id in capimg_candidate_ids %}
-    <li><img src="{{ STATIC_URL }}tmpimg/{{ id }}" /></li>
+{% for cand in capimg_candidates %}
+  <li id="candidate-{{ cand.id }}" class="capimg_candidates">
+    <span class="x">{{ cand.x }}</span>
+    <span class="y">{{ cand.y }}</span>
+    <span class="r">{{ cand.r }}</span>
+    <img src="{{ STATIC_URL }}tmpimg/{{ cand.id }}" />
+  </li>
 {% endfor %}
 </ol>
 {% endblock %}
