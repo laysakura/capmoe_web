@@ -8,8 +8,11 @@
 <input type="submit" value="送信">
 </form>
 
-<p>王冠部分確認</p>
-<img id="capimg-preview" src="{{ STATIC_URL }}tmpimg/{{ tmpimg_id }}" max-width="400px" max-height="400px">
+<p>王冠部分プレビュー</p>
+<div id="capimg-preview">
+  <img id="capimg-preview-img" src="{{ STATIC_URL }}tmpimg/{{ tmpimg_id }}">
+  <canvas id="capimg-preview-canvas"></canvas>
+</div>
 
 <p>王冠候補</p>
 <ol>
@@ -18,7 +21,7 @@
     <span class="x">{{ cand.x }}</span>
     <span class="y">{{ cand.y }}</span>
     <span class="r">{{ cand.r }}</span>
-    <img src="{{ STATIC_URL }}tmpimg/{{ cand.id }}">
+    <img class="capimg-candidates" src="{{ STATIC_URL }}tmpimg/{{ cand.id }}">
   </li>
 {% endfor %}
 </ol>
