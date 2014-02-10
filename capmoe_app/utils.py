@@ -9,6 +9,9 @@
 """
 
 
+# python 2.x support
+from __future__ import division, print_function, absolute_import, unicode_literals
+
 # standard modules
 import string
 import random

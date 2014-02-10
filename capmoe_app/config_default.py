@@ -8,6 +8,9 @@
     Override these default values in your `config.py`
 """
 
+# python 2.x support
+from __future__ import division, print_function, absolute_import, unicode_literals
+
 # standard modules
 from os.path import join, expanduser
 
@@ -23,6 +26,9 @@ config = {
     'tmpimg_dir'         : join(expanduser('~'), 'CapMoeTmpImg'),
     'max_tmpimg_size'    : (800, 800),
     'tmpimg_pillow_type' : 'JPEG',
+
+    # cap image candidates
+    'max_capimg_candidates' : 5,
 
     # cap image
     'capimg_dir'    : join(expanduser('~'), 'CapMoeImg'),
