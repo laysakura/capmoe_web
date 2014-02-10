@@ -31,3 +31,7 @@ htmlcov/
 capmoe_web/password/*
 !capmoe_web/password/.gitkeep
 capmoe_app/config.py
+capmoe_app/static/tmpimg/*
+!capmoe_app/static/tmpimg/.gitkeep
+capmoe_app/static/capimg/*
+!capmoe_app/static/capimg/.gitkeep
