@@ -29,12 +29,6 @@ class UploadTmpImgForm(forms.Form):
 class UploadCapImgForm(forms.Form):
     """Form to chop a cap from temporary image, and upload it
     """
-    circle_choice = forms.ChoiceField(
-        choices=[
-            ('candidate1', 'candidate 1'),
-            ('candidate2', 'candidate 2'),
-            ('candidate3', 'candidate 3'),
-            ('candidate4', 'candidate 4'),
-            ('candidate5', 'candidate 5'),
-        ],
-        widget=forms.RadioSelect())
+    cap_x = forms.HiddenInput()
+    cap_y = forms.HiddenInput()
+    cap_r = forms.HiddenInput()

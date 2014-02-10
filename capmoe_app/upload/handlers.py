@@ -64,16 +64,15 @@ def gen_capimg_candidates(tmpimg_id):
         """Generate img and return its id
         """
         x, y, r = (circle['x'], circle['y'], circle['r'])
-        img     = Image.open(tmpimg_path)
-        draw    = ImageDraw.Draw(img)
-        draw.ellipse((x - r, y - r, x + r, y + r))
+
+        img = Image.open(tmpimg_path).crop((x - r, y - r, x + r, y + r))
+        img = img.resize(config['capimg_candidate_size'])
 
         capimg_candidate_path = '%s%s' % (tmpimg_path, utils.randstr(length=5))
         img.save(capimg_candidate_path, config['tmpimg_pillow_type'])
         return basename(capimg_candidate_path)
 
     tmpimg_path = join(config['tmpimg_dir'], str(tmpimg_id))
-    print(tmpimg_path)
     if not exists(tmpimg_path):
         raise err.TmpImgNotFoundError('No such file: %s' % (tmpimg_path))
 

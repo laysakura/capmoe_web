@@ -61,7 +61,7 @@ def upload_tmpimg_post(request):
     except err.TooLargeUploadError as e:
         logger.debug(e)
         return HttpResponse(str(e), status=415)
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         logger.error('Unexpected error: %s' % (e))
         raise  # 500 error
 
@@ -79,7 +79,7 @@ def upload_capimg(request, tmpimg_id):
     except err.TmpImgNotFoundError as e:
         logger.debug('Requested non-exisiting tmpimg (%s)' % (tmpimg_id))
         raise Http404
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         logger.error('Unexpected error: %s' % (e))
         raise  # 500 error
 
@@ -87,9 +87,9 @@ def upload_capimg(request, tmpimg_id):
     return render_to_response(
         'upload_capimg.html',
         context_instance=RequestContext(request, {
-            'form': form,
-            'tmpimg_id': tmpimg_id,
-            'capimg_candidate_ids': capimg_candidate_ids}))
+            'form'                 : form,
+            'tmpimg_id'            : tmpimg_id,
+            'capimg_candidate_ids' : capimg_candidate_ids}))
 
 
 def upload_capimg_post(request):
