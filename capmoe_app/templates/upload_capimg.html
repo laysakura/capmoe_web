@@ -1,7 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}王冠部分選択{% endblock %}
+
+{% block content %}
 <form enctype="multipart/form-data" method="POST" action="/upload/{{ tmpimg_id }}">{% csrf_token %}
 {{ form }}
 <input type="submit" value="送信" />
 </form>
+
+<p>王冠部分確認</p>
+<img src="{{ STATIC_URL }}tmpimg/{{ tmpimg_id }}" />
 
 <p>王冠候補</p>
 <ol>
@@ -9,3 +17,4 @@
     <li><img src="{{ STATIC_URL }}tmpimg/{{ id }}" /></li>
 {% endfor %}
 </ol>
+{% endblock %}
