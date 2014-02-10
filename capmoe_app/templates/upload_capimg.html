@@ -5,11 +5,11 @@
 {% block content %}
 <form enctype="multipart/form-data" method="POST" action="/upload/{{ tmpimg_id }}">{% csrf_token %}
 {{ form }}
-<input type="submit" value="送信" />
+<input type="submit" value="送信">
 </form>
 
 <p>王冠部分確認</p>
-<img src="{{ STATIC_URL }}tmpimg/{{ tmpimg_id }}" />
+<img id="capimg-preview" src="{{ STATIC_URL }}tmpimg/{{ tmpimg_id }}" max-width="400px" max-height="400px">
 
 <p>王冠候補</p>
 <ol>
@@ -18,7 +18,7 @@
     <span class="x">{{ cand.x }}</span>
     <span class="y">{{ cand.y }}</span>
     <span class="r">{{ cand.r }}</span>
-    <img src="{{ STATIC_URL }}tmpimg/{{ cand.id }}" />
+    <img src="{{ STATIC_URL }}tmpimg/{{ cand.id }}">
   </li>
 {% endfor %}
 </ol>
