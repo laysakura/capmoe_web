@@ -60,9 +60,6 @@ def gen_capimg_candidates(tmpimg_id):
     :raises: :class:`TmpImgNotFoundError` when temporary image file
         corresponding to :param:`tmpimg_id` is not found
     """
-    import capmoe.api  # python interpreter who import `capmoe` package
-                       # must have access to `cv2` package and so on
-
     def gen_capimg_candidate(tmpimg_path, circle):
         """Generate img and return its id
         """
@@ -79,6 +76,8 @@ def gen_capimg_candidates(tmpimg_id):
     if not exists(tmpimg_path):
         raise err.TmpImgNotFoundError('No such file: %s' % (tmpimg_path))
 
+    import capmoe.api  # python interpreter who import `capmoe` package
+                       # must have access to `cv2` package and so on
     cand_circles = capmoe.api.capdetector(
         tmpimg_path, max_candidates=config['max_capimg_candidates'])
     return [gen_capimg_candidate(tmpimg_path, c) for c in cand_circles]
