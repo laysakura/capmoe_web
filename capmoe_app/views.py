@@ -44,17 +44,19 @@ def upload_tmpimg_post(request):
     """
     form = UploadTmpImgForm(request.POST, request.FILES)
     if not form.is_valid():
-        logger.debug('Form contents is invalid')
-        return HttpResponse(status=415)  # Unsupported Media Type
+        logger.debug('Unsupported image is uploaded')
+        return HttpResponse(
+            'You uploaded non-supported image file',
+            status=415)
 
     try:
         tmpimg_id = save_uploaded_tmpimg(request.FILES['img_file'])
     except AttributeError as e:
         logger.debug(e)
-        return HttpResponse(status=415)  # too large; Unsupported Media Type
+        return HttpResponse(str(e), status=415)  # too large image
     except Exception as e:
         logger.error('Unexpected error: %s' % (e))
-        return HttpResponse(status=500)
+        raise  # 500 error
 
     return HttpResponseRedirect('/upload/%s' % (tmpimg_id))
 

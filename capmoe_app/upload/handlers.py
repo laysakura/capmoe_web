@@ -30,8 +30,9 @@ def save_uploaded_tmpimg(f):
     :raises: `AttributeError` when invalid image is uploaded
     """
     if f.size > config['max_upload_byte']:
-        raise AttributeError('Uploaded file is too large (%d bytes)' %
-                             (f.size))
+        raise AttributeError(
+            'Uploaded file is too large (%d bytes). Up to %d bytes' %
+            (f.size, config['max_upload_byte']))
 
     # resize
     img_stream = io.BytesIO(f.read())
