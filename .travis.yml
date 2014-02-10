@@ -22,4 +22,4 @@ before_script:
   - cp capmoe_app/config_sample.py capmoe_app/config.py
 
 script:
-  - "python manage.py test --exclude='(test_upload_capimg_get|test_file_path)'"  # skip tests that require cv packages
+  - "python manage.py test --exclude='(^test_upload_capimg_get$)'"  # skip tests that require cv packages
