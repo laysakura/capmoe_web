@@ -117,11 +117,30 @@ def test_upload_capimg_get():
     ns.eq_(res.status_code, 200)
 
 
-def test_upload_capimg_get_invalid():
+@parameterized([
+    'notexistingimage',
+])
+def test_upload_capimg_get_invalid(tmpimg_id):
     """GET to /upload/<invalid tmpimg_id>
     """
-    tmpimg_id = 'notexistingimage'
-
     c   = Client()
     res = c.get('/upload/%s' % (tmpimg_id))
+    ns.eq_(res.status_code, 404)
+
+
+def test_upload_done_get():
+    """GET to /upload/done/<capimg_id>
+    """
+    pass
+
+
+@parameterized([
+    'notexistingimage',
+    ''
+])
+def test_upload_done_get_invalid(capimg_id):
+    """GET to /upload/done/<invalid_capimg_id>
+    """
+    c   = Client()
+    res = c.get('/upload/done/%s' % (capimg_id))
     ns.eq_(res.status_code, 404)
