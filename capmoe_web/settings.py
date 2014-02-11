@@ -94,6 +94,35 @@ TEMPLATE_DIRS = [
 STATIC_URL = '/static/'
 
 
+# Logger
+import sys
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': ('[%(asctime)s] %(filename)s '
+                       '%(funcName)s():%(lineno)d\t%(message)s'),
+        },
+    },
+    'handlers': {
+        'rainbow': {
+            'level'     : 'DEBUG',
+            'class'     : 'rainbow_logging_handler.RainbowLoggingHandler',
+            'formatter' : 'verbose',
+            'stream'    : sys.stderr,
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers'  : ['rainbow'],
+            'level'     : 'DEBUG',
+            'propagate' : True,
+        },
+    },
+}
+
+
 # Unit test
 # Using django_nose => https://github.com/django-nose/django-nose
 

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <title>{% block title %}CapMoe - ビール王冠画像検索{% endblock %}</title>
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/capmoe.css">
+</head>
+
+<body>
+  <div id="content">
+    {% block content %}{% endblock %}
+  </div>
+
+  <footer>
+    <p>Copyright 2014 Sho Nakatani</p>
+  </footer>
+
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/capmoe.js"></script>
+</body>
+
+</html>

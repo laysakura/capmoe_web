@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}王冠部分選択{% endblock %}
+
+{% block content %}
+<form enctype="multipart/form-data" method="POST" action="/upload/{{ tmpimg_id }}">{% csrf_token %}
+{{ form }}
+<input type="submit" value="送信">
+</form>
+
+<p>王冠部分プレビュー</p>
+<div id="capimg-preview">
+  <img id="capimg-preview-img" src="{{ STATIC_URL }}tmpimg/{{ tmpimg_id }}">
+  <canvas id="capimg-preview-canvas"></canvas>
+</div>
+
+<p>王冠候補</p>
+<ol>
+{% for cand in capimg_candidates %}
+  <li id="candidate-{{ cand.id }}" class="candidates">
+    <span class="x">{{ cand.x }}</span>
+    <span class="y">{{ cand.y }}</span>
+    <span class="r">{{ cand.r }}</span>
+    <img class="capimg-candidates" src="{{ STATIC_URL }}tmpimg/{{ cand.id }}">
+  </li>
+{% endfor %}
+</ol>
+{% endblock %}

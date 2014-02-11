@@ -6,6 +6,9 @@
 """
 
 
+# python 2.x support
+from __future__ import division, print_function, absolute_import, unicode_literals
+
 # standard modules
 import os
 from os.path import basename, dirname, join
@@ -99,3 +102,26 @@ def test_upload_tmpimg_post_unsupported_file(fpath):
 
     # should respond w/ 415
     ns.eq_(res.status_code, 415)  # Unsupported Media Type
+
+
+def test_upload_capimg_get():
+    """GET to /upload/<tmpimg_id>
+    """
+    tmpimg_id = '123abc'
+
+    # prepare a tmporary image
+    shutil.copyfile(join(UP_IMAGE_DIR, '1b.jpg'), join(TMPIMG_DIR, tmpimg_id))
+
+    c   = Client()
+    res = c.get('/upload/%s' % (tmpimg_id))
+    ns.eq_(res.status_code, 200)
+
+
+def test_upload_capimg_get_invalid():
+    """GET to /upload/<invalid tmpimg_id>
+    """
+    tmpimg_id = 'notexistingimage'
+
+    c   = Client()
+    res = c.get('/upload/%s' % (tmpimg_id))
+    ns.eq_(res.status_code, 404)

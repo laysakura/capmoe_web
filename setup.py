@@ -24,10 +24,11 @@ setup(
     tests_require    = tests_require,
     install_requires = [
         # 'gunicorn',  # [todo] - introduce gunicorn as app server if too much load
+        'capmoe',
         'Django',
         'PyMySQL',
         'pillow',
-        # 'rainbow_logging_handler',
+        'rainbow_logging_handler',
     ],
     extras_require = {
         'testing': tests_require,

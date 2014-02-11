@@ -9,16 +9,20 @@
 """
 
 
+# python 2.x support
+from __future__ import division, print_function, absolute_import, unicode_literals
+
 # standard modules
-from os.path import join
+from os.path import join, exists, basename
 import io
 
 # 3rd party modules
-from PIL import Image
+from PIL import Image, ImageDraw
 
 # original modules
 from capmoe_app.config import config
 import capmoe_app.utils as utils
+import capmoe_app.errors as err
 
 
 def save_uploaded_tmpimg(f):
@@ -27,11 +31,12 @@ def save_uploaded_tmpimg(f):
     Temporary images are really saved after cap circle is chopped.
 
     :returns: temporary image id string
-    :raises: `AttributeError` when invalid image is uploaded
+    :raises: :class:`TooLargeUploadError` when uploaded file is too large
     """
     if f.size > config['max_upload_byte']:
-        raise AttributeError('Uploaded file is too large (%d bytes)' %
-                             (f.size))
+        raise err.TooLargeUploadError(
+            'Uploaded file is too large (%d bytes). Up to %d bytes' %
+            (f.size, config['max_upload_byte']))
 
     # resize
     img_stream = io.BytesIO(f.read())
@@ -46,3 +51,39 @@ def save_uploaded_tmpimg(f):
     img.save(path, config['tmpimg_pillow_type'])
 
     return tmpimg_id
+
+
+def gen_capimg_candidates(tmpimg_id):
+    """Generate candidate cap images
+
+    :returns: [{'id': 'capimg_candidate_id',
+               'x': candidate_x, 'y': candidate_y, 'r': candidate_r},
+               ...
+              ]
+    :raises: :class:`TmpImgNotFoundError` when temporary image file
+        corresponding to :param:`tmpimg_id` is not found
+    """
+    def gen_capimg_candidate(tmpimg_path, circle):
+        """Generate img and return its id
+        """
+        x, y, r = (circle['x'], circle['y'], circle['r'])
+
+        img = Image.open(tmpimg_path).crop((x - r, y - r, x + r, y + r))
+        img = img.resize(config['capimg_candidate_size'])
+
+        capimg_candidate_path = '%s%s' % (tmpimg_path, utils.randstr(length=5))
+        img.save(capimg_candidate_path, config['tmpimg_pillow_type'])
+        return basename(capimg_candidate_path)
+
+    tmpimg_path = join(config['tmpimg_dir'], str(tmpimg_id))
+    if not exists(tmpimg_path):
+        raise err.TmpImgNotFoundError('No such file: %s' % (tmpimg_path))
+
+    import capmoe.api  # python interpreter who import `capmoe` package
+                       # must have access to `cv2` package and so on
+    cand_circles = capmoe.api.capdetector(
+        tmpimg_path, max_candidates=config['max_capimg_candidates'])
+    return [
+        {'id': gen_capimg_candidate(tmpimg_path, c),
+         'x': c['x'], 'y': c['y'], 'r': c['r']}
+        for c in cand_circles]

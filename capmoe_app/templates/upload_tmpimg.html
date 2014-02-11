@@ -1,4 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}王冠画像アップロード{% endblock %}
+
+{% block content %}
 <form enctype="multipart/form-data" method="POST" action="/upload/">{% csrf_token %}
 {{ form }}
-<input type="submit" value="送信" />
+<input type="submit" value="送信">
 </form>
+{% endblock %}
