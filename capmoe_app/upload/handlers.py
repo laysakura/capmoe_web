@@ -100,14 +100,23 @@ def register_capimg(tmpimg_id, x, y, r):
     """Crop cap a image from tmporary image and register it to DB
 
     :returns: capimg_id
+    :raises: :class:`InvalidCircleError` when
+        circle is not included in temporary image
     """
     tmpimg_path = join(config['tmpimg_dir'], tmpimg_id)
     if not exists(tmpimg_path):
         raise err.TmpImgNotFoundError('No such file: %s' % (tmpimg_path))
 
     # crop box containing cap circle
-    img = Image.open(tmpimg_path).crop((x - r, y - r, x + r, y + r))
-    img = img.resize(config['capimg_candidate_size'])
+    img = Image.open(tmpimg_path)
+    if (r <= 0 or
+        x - r < 0 or x + r >= img.size[0] or
+        y - r < 0 or y + r >= img.size[1]
+    ):
+        raise err.InvalidCircleError(
+            'Circle (%d, %d, %d) is invalid for image size (%d, %d)' %
+            (x, y, r, img.size[0], img.size[1]))
+    img = img.crop((x - r, y - r, x + r, y + r)).resize(config['capimg_size'])
 
     # mask non-cap area
     foreground = Image.new('RGB', img.size, (0, 0, 255))
@@ -128,3 +137,16 @@ def register_capimg(tmpimg_id, x, y, r):
     masked_img.save(capimg_path, config['capimg_pillow_type'])
 
     return capimg_id
+
+
+def get_capimg_name(capimg_id):
+    """Get existing cap image name
+
+    :raises: :class:`CapImgNotFoundError` when cap image
+        corresponding to :param:`capimg_id` does not exist
+    """
+    capimg_path = join(config['capimg_dir'],
+                       '%s.%s' % (capimg_id, config['capimg_suffix']))
+    if not exists(capimg_path):
+        raise err.CapImgNotFoundError('No such file: %s' % (capimg_path))
+    return basename(capimg_path)

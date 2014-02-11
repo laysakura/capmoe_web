@@ -25,3 +25,11 @@ class TooLargeUploadError(AttributeError):
 
 class TmpImgNotFoundError(IOError):
     pass
+
+
+class CapImgNotFoundError(IOError):
+    pass
+
+
+class InvalidCircleError(AttributeError):
+    pass
