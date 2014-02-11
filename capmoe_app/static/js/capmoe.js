@@ -1,11 +1,18 @@
 ////////////////////////////////////////
 // upload_capimg.html
 ////////////////////////////////////////
-$(function(){
-  var img    = document.getElementById('capimg-preview-img')
-  var scale  = img.width / img.naturalWidth;
-  var canvas = document.getElementById('capimg-preview-canvas');
-  var ctx    = canvas.getContext("2d");
+function upload_capimg(){
+  // page local variables
+  var img;
+  var scale;
+  var canvas;
+  var ctx;
+  $(function(){
+    img    = document.getElementById('capimg-preview-img')
+    scale  = img.width / img.naturalWidth;
+    canvas = document.getElementById('capimg-preview-canvas');
+    ctx    = canvas.getContext("2d");
+  });
 
   // Canvas size by CSS
   // See http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties#comment-2614029
@@ -17,7 +24,7 @@ $(function(){
 
   // Select a candidate and fill its (x, y, r) into hidden input box
   $(function(){
-    $('.candidates').mousedown(function(e) {
+    $('.candidates').mousedown(function(e){
       var cand_id = e.currentTarget.id;
       var x = $('#' + cand_id + '>' + '.x').text();
       var y = $('#' + cand_id + '>' + '.y').text();
@@ -34,7 +41,7 @@ $(function(){
   // Draw a circle on #capimg-preview-canvas
   $(function(){
     ctx.strokeStyle = '#00F';
-    $('#id_cap_x, #id_cap_y, #id_cap_r').change(function(e) {
+    $('#id_cap_x, #id_cap_y, #id_cap_r').change(function(e){
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.beginPath();
       ctx.arc($('#id_cap_x').val() * scale, $('#id_cap_y').val() * scale, $('#id_cap_r').val() * scale,
@@ -45,7 +52,7 @@ $(function(){
 
   // Draw a circle with mouse on #capimg-preview-canvas
   $(function(){
-    $('#capimg-preview-canvas').mousedown(function(e) {
+    $('#capimg-preview-canvas').mousedown(function(e){
       var railhead = e.target.getBoundingClientRect();
       var center_x = e.clientX-railhead.left;
       var center_y = e.clientY-railhead.top;
@@ -72,5 +79,4 @@ $(function(){
       });
     });
   });
-
-});
+};

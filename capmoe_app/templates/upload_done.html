@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}王冠アップロード完了{% endblock %}
+
+{% block content %}
+<p>王冠画像をアップロードしました。</p>
+<img id="capimg" src="{{ STATIC_URL }}capimg/{{ capimg_name }}">
+{% endblock %}

@@ -33,9 +33,11 @@ config = {
 
     # cap image candidates
     'max_capimg_candidates' : 5,
-    'capimg_candidate_size' : (200, 200),
+    'capimg_candidate_size' : (100, 100),
 
     # cap image
-    'capimg_dir'    : join(BASE_DIR, 'capmoe_app', 'static', 'capimg'),
-    'capimg_suffix' : 'jpg',
+    'capimg_dir'         : join(BASE_DIR, 'capmoe_app', 'static', 'capimg'),
+    'capimg_suffix'      : 'jpg',
+    'capimg_pillow_type' : 'JPEG',
+    'capimg_size'        : (200, 200),
 }
