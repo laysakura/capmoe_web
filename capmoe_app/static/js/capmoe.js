@@ -2,10 +2,17 @@
 // upload_capimg.html
 ////////////////////////////////////////
 function upload_capimg(){
-  var img    = document.getElementById('capimg-preview-img')
-  var scale  = img.width / img.naturalWidth;
-  var canvas = document.getElementById('capimg-preview-canvas');
-  var ctx    = canvas.getContext("2d");
+  // page local variables
+  var img;
+  var scale;
+  var canvas;
+  var ctx;
+  $(function(){
+    img    = document.getElementById('capimg-preview-img')
+    scale  = img.width / img.naturalWidth;
+    canvas = document.getElementById('capimg-preview-canvas');
+    ctx    = canvas.getContext("2d");
+  });
 
   // Canvas size by CSS
   // See http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties#comment-2614029
@@ -72,5 +79,4 @@ function upload_capimg(){
       });
     });
   });
-
 };
