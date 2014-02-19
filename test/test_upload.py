@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    :synopsis: Unit tests for models of CapMoe
+    :synopsis: Unit tests for /upload view
 
     Description.
 """
@@ -202,30 +202,3 @@ def test_upload_capimg_post_invalid_tmpimg():
 
     # should respond w/ 400 (Bad Request)
     ns.eq_(res.status_code, 400)
-
-
-def test_upload_done_get():
-    """GET to /upload/done/<capimg_id>
-    """
-    capimg_id = '1234abcd'
-
-    # prepare cap image
-    shutil.copyfile(
-        join(UP_IMAGE_DIR, '1a.jpg'),
-        join(CAPIMG_DIR, '%s.%s' % (capimg_id, config['capimg_suffix'])))
-
-    c   = Client()
-    res = c.get('/upload/done/%s' % (capimg_id))
-    ns.eq_(res.status_code, 200)
-
-
-@parameterized([
-    'notexistingimage',
-    ''
-])
-def test_upload_done_get_invalid(capimg_id):
-    """GET to /upload/done/<invalid_capimg_id>
-    """
-    c   = Client()
-    res = c.get('/upload/done/%s' % (capimg_id))
-    ns.eq_(res.status_code, 404)

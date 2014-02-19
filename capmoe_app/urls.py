@@ -19,12 +19,14 @@ from django.conf.urls import patterns, url
 
 # original modules
 from capmoe_app.upload import views as upload_views
+from capmoe_app.answer import views as answer_views
 
 
 urlpatterns = patterns(
     '',
 
-    url(r'^upload/done/(?P<capimg_id>[\d\w]+)' , upload_views.upload_done),
     url(r'^upload/(?P<tmpimg_id>[\d\w]+)'      , upload_views.upload_capimg),
     url(r'^upload/'                            , upload_views.upload_tmpimg),
+
+    url(r'^answer/(?P<capimg_id>[\d\w]+)', answer_views.answer),
 )

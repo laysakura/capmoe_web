@@ -3,9 +3,7 @@
     capmoe_app.views
     ~~~~~~~~~~~~~~~~
 
-    :synopsis: Describes what data to show
-
-    See: https://docs.djangoproject.com/en/dev/faq/general/#django-appears-to-be-a-mvc-framework-but-you-call-the-controller-the-view-and-the-view-the-template-how-come-you-don-t-use-the-standard-names
+    :synopsis: View to upload cap images
 """
 
 
@@ -28,7 +26,6 @@ from capmoe_app.upload.handlers import (
     save_uploaded_tmpimg,
     gen_capimg_candidates,
     register_capimg,
-    get_capimg_name,
 )
 
 
@@ -118,21 +115,3 @@ def upload_capimg_post(request, tmpimg_id):
         raise  # 500 error
 
     return HttpResponseRedirect('/upload/done/%s' % (capimg_id))
-
-
-def upload_done(request, capimg_id):
-    """Page to check uploaded cap image
-    """
-    try:
-        capimg_name = get_capimg_name(capimg_id)
-    except err.CapImgNotFoundError as e:
-        logger.debug('Requested non-exisiting capimg (%s)' % (e))
-        raise Http404
-    except Exception as e:  # pragma: no cover
-        logger.error('Unexpected error: %s' % (e))
-        raise  # 500 error
-
-    return render_to_response(
-        'upload_done.html',
-        context_instance=RequestContext(request, {
-            'capimg_name': capimg_name}))
