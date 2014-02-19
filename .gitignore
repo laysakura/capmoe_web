@@ -35,3 +35,4 @@ capmoe_app/static/tmpimg/*
 !capmoe_app/static/tmpimg/.gitkeep
 capmoe_app/static/capimg/*
 !capmoe_app/static/capimg/.gitkeep
+*.npy
