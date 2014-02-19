@@ -18,13 +18,13 @@ from __future__ import division, print_function, absolute_import, unicode_litera
 from django.conf.urls import patterns, url
 
 # original modules
-from capmoe_app import views
+from capmoe_app.upload import views as upload_views
 
 
 urlpatterns = patterns(
     '',
 
-    url(r'^upload/done/(?P<capimg_id>[\d\w]+)', views.upload_done),
-    url(r'^upload/(?P<tmpimg_id>[\d\w]+)', views.upload_capimg),
-    url(r'^upload/', views.upload_tmpimg),
+    url(r'^upload/done/(?P<capimg_id>[\d\w]+)' , upload_views.upload_done),
+    url(r'^upload/(?P<tmpimg_id>[\d\w]+)'      , upload_views.upload_capimg),
+    url(r'^upload/'                            , upload_views.upload_tmpimg),
 )
