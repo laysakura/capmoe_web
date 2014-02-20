@@ -21,7 +21,7 @@
     <span class="x">{{ cand.x }}</span>
     <span class="y">{{ cand.y }}</span>
     <span class="r">{{ cand.r }}</span>
-    <img class="capimg-candidates" src="{{ STATIC_URL }}tmpimg/{{ cand.id }}">
+    <img class="capimg-candidates" src="{{ STATIC_URL }}{{ tmpimg_dirname }}/{{ cand.id }}">
   </li>
 {% endfor %}
 </ol>

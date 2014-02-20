@@ -16,7 +16,7 @@ from os.path import join
 import nose.tools as ns
 
 # original modules
-from capmoe_app.config import config
+from capmoe_app.config import config, STATIC_DIR
 from capmoe_app.models import CapImage
 
 
@@ -28,4 +28,5 @@ def setUp(self):
 def test_file_path():
     record = CapImage.objects.get(id=1)
     ns.eq_(record.capimg_path(),
-           join(config['capimg_dir'], '1.' + config['capimg_suffix']))
+           join(STATIC_DIR, config['capimg_dirname'],
+                '1.%s' % (config['capimg_suffix'])))

@@ -12,7 +12,6 @@ from __future__ import division, print_function, absolute_import, unicode_litera
 # standard modules
 import os
 from os.path import basename, dirname, join
-from tempfile import gettempdir
 import shutil
 
 # 3rd party modules
@@ -22,29 +21,30 @@ from django.test.client import Client
 from PIL import Image
 
 # original modules
-from capmoe_app.config import config
+from capmoe_app.config import config, STATIC_DIR
 from capmoe_app import utils
 
 
 # constants
-UP_IMAGE_DIR = join(dirname(__file__), 'images')
-TMPIMG_DIR   = join(gettempdir(), 'test_upload_tmpimg')
-CAPIMG_DIR   = join(gettempdir(), 'test_upload_capimg')
+UP_IMAGE_DIR   = join(dirname(__file__), 'images')
 
 
 def setup():
-    if not os.path.exists(TMPIMG_DIR):
-        os.mkdir(TMPIMG_DIR)
-    if not os.path.exists(CAPIMG_DIR):
-        os.mkdir(CAPIMG_DIR)
-    config['tmpimg_dir']      = TMPIMG_DIR
-    config['capimg_dir']      = CAPIMG_DIR
+    # create image directories
+    config['tmpimg_dirname'] = '__temporary_tmpimg__'
+    config['capimg_dirname'] = '__temporary_capimg__'
+    for dirname in (config['tmpimg_dirname'], config['capimg_dirname']):
+        dirpath = join(STATIC_DIR, dirname)
+        if not os.path.exists(dirpath):
+            os.mkdir(dirpath)
+
     config['max_upload_byte'] = 500 * 1e3
 
 
 def teardown():
-    shutil.rmtree(TMPIMG_DIR)
-    shutil.rmtree(CAPIMG_DIR)
+    for dirname in (config['tmpimg_dirname'], config['capimg_dirname']):
+        dirpath = join(STATIC_DIR, dirname)
+        shutil.rmtree(dirpath)
 
 
 def test_upload_tmpimg_get():
@@ -73,7 +73,7 @@ def test_upload_tmpimg_post(up_img_name):
     tmpimg_id = basename(res['Location'])
 
     # check temporary image
-    path = join(TMPIMG_DIR, tmpimg_id)
+    path = join(STATIC_DIR, config['tmpimg_dirname'], tmpimg_id)
     img  = Image.open(path)
     ns.eq_(img.format, 'JPEG')
     ns.ok_(img.size[0] <= config['max_tmpimg_size'][0] and
@@ -115,7 +115,9 @@ def test_upload_capimg_get():
     tmpimg_id = '123abc'
 
     # prepare a tmporary image
-    shutil.copyfile(join(UP_IMAGE_DIR, '1b.jpg'), join(TMPIMG_DIR, tmpimg_id))
+    shutil.copyfile(
+        join(UP_IMAGE_DIR, '1b.jpg'),
+        join(STATIC_DIR, config['tmpimg_dirname'], tmpimg_id))
 
     c   = Client()
     res = c.get('/upload/%s' % (tmpimg_id))
@@ -143,7 +145,9 @@ def test_upload_capimg_post(img_to_up, circle):
     tmpimg_id = utils.randstr(length=10)
 
     # prepare temporary image
-    shutil.copyfile(join(UP_IMAGE_DIR, img_to_up), join(TMPIMG_DIR, tmpimg_id))
+    shutil.copyfile(
+        join(UP_IMAGE_DIR, img_to_up),
+        join(STATIC_DIR, config['tmpimg_dirname'], tmpimg_id))
 
     # POST tmpimg & circle info to crop
     res = c.post('/upload/%s' % (tmpimg_id), {
@@ -157,7 +161,8 @@ def test_upload_capimg_post(img_to_up, circle):
     capimg_id = basename(res['Location'])
 
     # check cap image
-    path = join(CAPIMG_DIR, '%s.%s' % (capimg_id, config['capimg_suffix']))
+    path = join(STATIC_DIR, config['capimg_dirname'],
+                '%s.%s' % (capimg_id, config['capimg_suffix']))
     img  = Image.open(path)
     ns.eq_(img.format, 'JPEG')
     ns.eq_(img.size, config['capimg_size'])
@@ -176,7 +181,9 @@ def test_upload_capimg_post_invalid_circle(img_to_up, circle):
     tmpimg_id = utils.randstr(length=10)
 
     # prepare temporary image
-    shutil.copyfile(join(UP_IMAGE_DIR, img_to_up), join(TMPIMG_DIR, tmpimg_id))
+    shutil.copyfile(
+        join(UP_IMAGE_DIR, img_to_up),
+        join(STATIC_DIR, config['tmpimg_dirname'], tmpimg_id))
 
     # POST tmpimg & invalid circle info
     res = c.post('/upload/%s' % (tmpimg_id), {

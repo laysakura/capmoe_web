@@ -9,7 +9,7 @@
 """
 
 
-from capmoe_app.config_default import config
+from capmoe_app.config_default import config, STATIC_DIR
 
 
 # [todo] - more informative sample?

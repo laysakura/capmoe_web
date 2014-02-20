@@ -20,14 +20,15 @@ from os.path import join, dirname
 
 
 # constants
-BASE_DIR = join(dirname(__file__), '..')
+BASE_DIR   = join(dirname(__file__), '..')
+STATIC_DIR = join(BASE_DIR, 'capmoe_app', 'static')
 
 
 config = {
     'max_upload_byte' : 4 * 1e6,  # must be multiply of 4
 
     # temporary image (before cap is chopped)
-    'tmpimg_dir'         : join(BASE_DIR, 'capmoe_app', 'static', 'tmpimg'),
+    'tmpimg_dirname'     : 'tmpimg',
     'max_tmpimg_size'    : (800, 800),
     'tmpimg_pillow_type' : 'JPEG',
 
@@ -36,7 +37,7 @@ config = {
     'capimg_candidate_size' : (100, 100),
 
     # cap image
-    'capimg_dir'         : join(BASE_DIR, 'capmoe_app', 'static', 'capimg'),
+    'capimg_dirname'     : 'capimg',
     'capimg_suffix'      : 'jpg',
     'capimg_pillow_type' : 'JPEG',
     'capimg_size'        : (200, 200),

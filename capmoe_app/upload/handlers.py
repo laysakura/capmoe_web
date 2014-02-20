@@ -21,7 +21,7 @@ import logging
 from PIL import Image, ImageDraw
 
 # original modules
-from capmoe_app.config import config
+from capmoe_app.config import config, STATIC_DIR
 import capmoe_app.utils as utils
 import capmoe_app.errors as err
 from capmoe_app.models import CapImage
@@ -53,7 +53,7 @@ def save_uploaded_tmpimg(f):
 
     # save
     tmpimg_id = utils.randstr(length=10)
-    path = join(config['tmpimg_dir'], tmpimg_id)
+    path = join(STATIC_DIR, config['tmpimg_dirname'], tmpimg_id)
     img.save(path, config['tmpimg_pillow_type'])
 
     return tmpimg_id
@@ -82,7 +82,7 @@ def gen_capimg_candidates(tmpimg_id):
         img.save(capimg_candidate_path, config['tmpimg_pillow_type'])
         return basename(capimg_candidate_path)
 
-    tmpimg_path = join(config['tmpimg_dir'], tmpimg_id)
+    tmpimg_path = join(STATIC_DIR, config['tmpimg_dirname'], tmpimg_id)
     if not exists(tmpimg_path):
         raise err.TmpImgNotFoundError('No such file: %s' % (tmpimg_path))
 
@@ -103,7 +103,7 @@ def register_capimg(tmpimg_id, x, y, r):
     :raises: :class:`InvalidCircleError` when
         circle is not included in temporary image
     """
-    tmpimg_path = join(config['tmpimg_dir'], tmpimg_id)
+    tmpimg_path = join(STATIC_DIR, config['tmpimg_dirname'], tmpimg_id)
     if not exists(tmpimg_path):
         raise err.TmpImgNotFoundError('No such file: %s' % (tmpimg_path))
 
@@ -131,7 +131,7 @@ def register_capimg(tmpimg_id, x, y, r):
     capimg_id = record.id
 
     # save masked cap image
-    capimg_path = join(config['capimg_dir'], '%d.%s' %
+    capimg_path = join(STATIC_DIR, config['capimg_dirname'], '%d.%s' %
                        (capimg_id, config['capimg_suffix']))
     assert(not exists(capimg_path))
     masked_img.save(capimg_path, config['capimg_pillow_type'])

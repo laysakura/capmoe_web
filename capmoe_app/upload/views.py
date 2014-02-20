@@ -22,6 +22,7 @@ from django.template import RequestContext
 # original modules
 from capmoe_app.upload.forms import UploadTmpImgForm, UploadCapImgForm
 import capmoe_app.errors as err
+from capmoe_app.config import config
 from capmoe_app.upload.handlers import (
     save_uploaded_tmpimg,
     gen_capimg_candidates,
@@ -88,7 +89,9 @@ def upload_capimg(request, tmpimg_id):
         context_instance=RequestContext(request, {
             'form'              : form,
             'tmpimg_id'         : tmpimg_id,
-            'capimg_candidates' : capimg_candidates}))
+            'capimg_candidates' : capimg_candidates,
+            'tmpimg_dirname'    : config['tmpimg_dirname'],
+        }))
 
 
 def upload_capimg_post(request, tmpimg_id):
@@ -114,4 +117,4 @@ def upload_capimg_post(request, tmpimg_id):
         logger.error('Unexpected error: %s' % (e))
         raise  # 500 error
 
-    return HttpResponseRedirect('/upload/done/%s' % (capimg_id))
+    return HttpResponseRedirect('/answer/%s' % (capimg_id))

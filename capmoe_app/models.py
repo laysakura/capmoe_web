@@ -19,7 +19,7 @@ import os
 from django.db import models
 
 # original modules
-from capmoe_app.config import config
+from capmoe_app.config import config, STATIC_DIR
 
 
 class CapImage(models.Model):
@@ -27,5 +27,5 @@ class CapImage(models.Model):
     # [todo] - feature vector column?
 
     def capimg_path(self):
-        return os.path.join(config['capimg_dir'],
+        return os.path.join(STATIC_DIR, config['capimg_dirname'],
                             '%d.%s' % (self.id, config['capimg_suffix']))

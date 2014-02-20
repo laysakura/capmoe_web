@@ -20,7 +20,7 @@ import random
 # 3rd party modules
 
 # original modules
-from capmoe_app.config import config
+from capmoe_app.config import config, STATIC_DIR
 import capmoe_app.errors as err
 
 
@@ -61,7 +61,7 @@ def get_capimg_name(capimg_id):
     :raises: :class:`CapImgNotFoundError` when cap image
         corresponding to :param:`capimg_id` does not exist
     """
-    capimg_path = join(config['capimg_dir'],
+    capimg_path = join(STATIC_DIR, config['capimg_dirname'],
                        '%s.%s' % (capimg_id, config['capimg_suffix']))
     if not exists(capimg_path):
         raise err.CapImgNotFoundError('No such file: %s' % (capimg_path))
